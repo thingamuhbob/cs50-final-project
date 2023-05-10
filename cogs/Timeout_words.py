@@ -101,7 +101,7 @@ class Timeout_words(commands.Cog):
                 d = datetime.timedelta(seconds=300)
                 reason = "used a timeout word"
                 await message.author.timeout(d, reason=reason)
-                await message.reply(f"{message.author.nick} has been timed out for five minutes for using a naughty word.")
+                await message.reply(f"{message.author.name} has been timed out for five minutes for using a naughty word.")
                 
                 
     # @commands.command()
