@@ -1,4 +1,5 @@
 import discord
+import datetime
 import sqlite3
 from discord.ext import commands
 
@@ -81,6 +82,24 @@ class Timeout_words(commands.Cog):
     async def remove_timeout_word_error(self, ctx, error):
         if isinstance(error, commands.CheckFailure):
             await ctx.send('You do not have the permissions to remove a timeout word.')
+            
+            
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        # Don't listen to yourself, bot
+        if message.author == self.bot.user:
+            return
+        
+        # Skip command messages
+        if message.content.startswith(self.bot.command_prefix):
+            return
+        
+        for word in self.timeout_words:
+            if word in message:
+                d = datetime.timedelta(seconds=300)
+                reason = "used a timeout word"
+                await message.author.timeout(d, reason=reason)
+                await message.reply(f"{message.author.nick} has been timed out for five minutes for using a naughty word.")
         
         
 async def setup(bot):

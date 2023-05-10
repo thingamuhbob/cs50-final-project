@@ -8,7 +8,8 @@ class Ping(commands.Cog):
         
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send("Pong!")
+        latency = round(self.bot.latency * 1000, 3)
+        await ctx.send(f"Pong! \nLatency: {latency}ms")
         
         
 async def setup(bot):
