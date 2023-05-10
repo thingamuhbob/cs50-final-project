@@ -26,7 +26,7 @@ class Timeout_words(commands.Cog):
             await ctx.send(f"'{word}' is already on the timeout words list.")
             return
         
-        print(f'Trying to add "{word}" to timeout_words...', end='')
+        print(f'Trying to add "{word}" to timeout_words... ', end='')
         self.timeout_words.append(word)
         
         try:
@@ -46,6 +46,41 @@ class Timeout_words(commands.Cog):
     async def add_timeout_word_error(self, ctx, error):
         if isinstance(error, commands.CheckFailure):
             await ctx.send('You do not have the permissions to add a timeout word.')
+            
+            
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_guild_permissions(administrator=True)
+    async def remove_timeout_word(self, ctx, word: str):
+        word = word.lower()
+        if word == 'zorfin':
+            await ctx.send("Why would you ever want to do that... BUT I GUESS:")
+        if word not in self.timeout_words:
+            print(f"'{word}' is not on the timeout words list.")
+            await ctx.send(f"'{word}' is not on the timeout words list.")
+            return
+        
+        print(f'Trying to remove "{word}" from timeout_words... ', end='')
+        self.timeout_words.remove(f'{word}')
+        if word in self.timeout_words:
+            print(f'timeout_words still contains an instance of {word}')
+            
+        try:
+            conn = sqlite3.connect("WoT.db")
+            c = conn.cursor()
+            c.execute("DELETE FROM timeout_words WHERE word = ?", (word,))
+            conn.commit()
+            conn.close()
+            print('SUCCESS')
+        except Exception as e:
+            print(f"Error deleting '{word}' from the timeout_words table: {e}")
+            
+        await ctx.send(f"Removed '{word}' from the list of timeout words.")
+        
+    @remove_timeout_word.error
+    async def remove_timeout_word_error(self, ctx, error):
+        if isinstance(error, commands.CheckFailure):
+            await ctx.send('You do not have the permissions to remove a timeout word.')
         
         
 async def setup(bot):
