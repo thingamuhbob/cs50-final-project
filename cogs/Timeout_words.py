@@ -94,12 +94,20 @@ class Timeout_words(commands.Cog):
         if message.content.startswith(self.bot.command_prefix):
             return
         
+        print(message.content)
         for word in self.timeout_words:
-            if word in message:
+            print(word)
+            if word in message.content:
                 d = datetime.timedelta(seconds=300)
                 reason = "used a timeout word"
                 await message.author.timeout(d, reason=reason)
                 await message.reply(f"{message.author.nick} has been timed out for five minutes for using a naughty word.")
+                
+                
+    # @commands.command()
+    # async def timeout_words(self):
+    #     lst = ', '.join(self.timeout_words)
+    #     await 
         
         
 async def setup(bot):
