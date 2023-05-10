@@ -65,7 +65,7 @@ class Timeout_words(commands.Cog):
             
             
     @timeout_word.error
-    async def remove_timeout_word_error(self, ctx, error):
+    async def timeout_word_error(self, ctx, error):
             if isinstance(error, commands.CheckFailure):
                 await ctx.send('You do not have the permissions to edit the timeout words.')
             
