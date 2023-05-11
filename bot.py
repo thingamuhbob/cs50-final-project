@@ -35,6 +35,18 @@ async def load():
             print("SUCCESS")
 
 
+@bot.event
+async def on_message(message):
+    # Don't listen to yourself, bot
+    if message.author == bot.user:
+        return
+
+    if "wipes on trash" in message.content.lower():
+        await message.reply(
+            "Wipes on Trash. You will never find a more wretched hive of scum and villainy. We must be cautious."
+        )
+
+
 async def main():
     await load()
     await bot.start(TOKEN)
