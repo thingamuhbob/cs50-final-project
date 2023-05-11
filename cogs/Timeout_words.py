@@ -15,17 +15,14 @@ class Timeout_words(commands.Cog):
                 self.timeout_words.append(row[0])       
         
         
-    @commands.command()
+    @commands.command(usage="add|remove <word>")
     @commands.guild_only()
     @commands.has_guild_permissions(administrator=True)
-    async def timeout_word(self, ctx, action: str, word: str):
+    async def timeout_word(self, ctx, action: str = commands.parameter(default="add", description="The action to perform ('add' or 'remove')."), word: str = commands.parameter(description="The word to add or remove from the list.")):
         """
-        Adds or removes a word from the timeout word list.
-
-        Arguments:
-            action (str): add/remove
-            word (str): a __single__ word to be added/removed from the list
+        Add or remove a word from the timeout words list.
         """
+            
         # Adds a word to the timeout_words table and updates the list in memory
         word = word.lower()
         if action == 'add':
