@@ -21,6 +21,9 @@ class Timeout_words(commands.Cog):
     async def timeout_word(self, ctx, action: str = commands.parameter(default="add", description="The action to perform ('add' or 'remove')."), word: str = commands.parameter(description="The word to add or remove from the list.")):
         """
         Add or remove a word from the timeout words list.
+        
+        Usage:
+          $timeout_word <action> <word>
         """
 
         # Adds a word to the timeout_words table and updates the list in memory
