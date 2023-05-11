@@ -22,7 +22,7 @@ class Timeout_words(commands.Cog):
         """
         Add or remove a word from the timeout words list.
         """
-            
+
         # Adds a word to the timeout_words table and updates the list in memory
         word = word.lower()
         if action == 'add':
