@@ -1,9 +1,8 @@
-import asyncio
-import discord
-import os
+import asyncio, discord, logging, os
 
 from discord.ext import commands
 from dotenv import load_dotenv
+from logging.handlers import RotatingFileHandler
 
 # get private token from .env
 load_dotenv()
@@ -15,6 +14,22 @@ intents.members = True
 intents.message_content = True
 
 bot = commands.Bot(command_prefix="$", case_insensitive=True, intents=intents)
+
+# LOGGING
+# Define the rotating file handler
+log_handler = RotatingFileHandler(
+    filename="bot.log", maxBytes=32 * 1024 * 1024, backupCount=5, encoding="utf-8"
+)
+# Set the log level and add the handler to the logger
+log_handler.setLevel(logging.INFO)
+log_handler.setFormatter(
+    logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
+)
+dt_fmt = "%Y-%m-%d %H:%M:%S"
+formatter = logging.Formatter(
+    "[{asctime}] [{levelname:<8}] {name}: {message}", dt_fmt, style="{"
+)
+log_handler.setFormatter(formatter)
 
 
 # Is bot loaded?
@@ -51,7 +66,7 @@ async def on_message(message):
 
 # Set up bot
 async def main():
-    discord.utils.setup_logging()
+    discord.utils.setup_logging(handler=log_handler, formatter=formatter)
     await load()
     await bot.start(TOKEN)
 
