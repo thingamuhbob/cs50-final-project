@@ -1,4 +1,4 @@
-import discord
+# import discord
 from discord.ext import commands
 
 
@@ -11,6 +11,7 @@ class Ping(commands.Cog):
         """
         Responds with the current bot latency.
         """
+
         latency = round(self.bot.latency * 1000, 3)
         await ctx.send(f"Pong! \nLatency: {latency}ms")
 

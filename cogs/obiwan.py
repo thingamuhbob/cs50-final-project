@@ -7,6 +7,7 @@ from discord.ext import commands
 class Obiwan(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.processed_messages = set()
         self.quotes = []
 
         with sqlite3.connect("WoT.db") as conn:
