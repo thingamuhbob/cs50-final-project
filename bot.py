@@ -31,6 +31,11 @@ formatter = logging.Formatter(
 )
 log_handler.setFormatter(formatter)
 
+discord.utils.setup_logging(handler=log_handler, formatter=formatter)
+
+# Get logger instance for use in cogs
+logger = logging.getLogger("discord")
+
 
 # Is bot loaded?
 @bot.event
@@ -66,7 +71,6 @@ async def on_message(message):
 
 # Set up bot
 async def main():
-    discord.utils.setup_logging(handler=log_handler, formatter=formatter)
     await load()
     await bot.start(TOKEN)
 

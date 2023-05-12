@@ -1,5 +1,6 @@
 import discord
 import datetime
+import logging
 import sqlite3
 from discord.ext import commands
 
@@ -7,6 +8,7 @@ from discord.ext import commands
 class Timeout_words(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.logger = logging.getLogger("discord")
         self.timeout_words = []
 
         with sqlite3.connect("WoT.db") as conn:
@@ -81,6 +83,9 @@ class Timeout_words(commands.Cog):
     @timeout_word.error
     async def timeout_word_error(self, ctx, error):
         if isinstance(error, commands.CheckFailure):
+            self.logger.warning(
+                f"{ctx.author.name} attempted to run {ctx.command} without proper permissions."
+            )
             await ctx.send("You do not have the permissions to edit the timeout words.")
 
     @commands.Cog.listener()
