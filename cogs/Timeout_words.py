@@ -8,6 +8,7 @@ from discord.ext import commands
 class Timeout_words(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        # * this is how you get the same logger from the main file
         self.logger = logging.getLogger("discord")
         self.timeout_words = []
 
