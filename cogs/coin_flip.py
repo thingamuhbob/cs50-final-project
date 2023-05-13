@@ -1,8 +1,6 @@
 import discord, logging, random
 from discord.ext import commands
 
-# TODO: Fix error handling if commands are incorrect or given incorrect arguments
-
 
 class Coin_flip(commands.Cog):
     def __init__(self, bot):
@@ -65,7 +63,7 @@ class Coin_flip(commands.Cog):
     async def guess_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             self.logger.error(
-                f"{ctx.author.name} attempted to {ctx.command} without an argument"
+                f"{ctx.author.name} attempted to ${ctx.command} without an argument"
             )
             await ctx.send("You must include either 'heads' or 'tails' after $guess")
 
